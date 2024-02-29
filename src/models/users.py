@@ -1,5 +1,4 @@
 import sqlalchemy
-from sqlalchemy.dialects.postgresql import UUID
 
 metadata = sqlalchemy.MetaData()
 
@@ -17,21 +16,4 @@ users_table = sqlalchemy.Table(
         server_default=sqlalchemy.sql.expression.true(),
         nullable=False,
     ),
-)
-
-
-tokens_table = sqlalchemy.Table(
-    "tokens",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
-    sqlalchemy.Column(
-        "token",
-        UUID(as_uuid=False),
-        server_default=sqlalchemy.text("uuid_generate_v4()"),
-        unique=True,
-        nullable=False,
-        index=True,
-    ),
-    sqlalchemy.Column("expires", sqlalchemy.DateTime()),
-    sqlalchemy.Column("user_id", sqlalchemy.ForeignKey("users.id")),
 )
